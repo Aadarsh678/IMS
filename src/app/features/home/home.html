@@ -1,0 +1,16 @@
+<!-- Add Post Form -->
+<form [formGroup]="postForm" (ngSubmit)="addPost()" class="add-post-form">
+  <input formControlName="title" placeholder="Post title" />
+  <textarea formControlName="description" placeholder="Write your post..."></textarea>
+  <button type="submit" [disabled]="postForm.invalid">Post</button>
+</form>
+
+<!-- Feed -->
+<div class="feed">
+  <div class="post-card" *ngFor="let post of posts">
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.description }}</p>
+    <div class="meta">Status: {{ post.status }}</div>
+    <app-comments [postId]="post.id"></app-comments>
+  </div>
+</div>

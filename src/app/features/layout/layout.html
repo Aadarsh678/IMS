@@ -1,0 +1,26 @@
+<nav class="navbar">
+  <div class="logo">Issue Management</div>
+  <ul class="nav-items">
+    <li (click)="navigateTo('/home')">Home</li>
+    <li (click)="navigateTo('/posts/create')">+ Create Post</li>
+    <li *ngIf="isAdmin()" (click)="navigateTo('/admin/approve')">Approve Posts</li>
+    <li (click)="logout()">Logout</li>
+  </ul>
+</nav>
+
+<div class="container">
+  <aside class="sidebar">
+    <ul>
+      <li (click)="navigateTo('/home?filter=all')">All Posts</li>
+      <li (click)="navigateTo('/home?filter=DRAFT')">Draft</li>
+      <li (click)="navigateTo('/home?filter=SUBMITTED')">Submitted</li>
+      <li (click)="navigateTo('/home?filter=APPROVED')">Approved</li>
+      <li (click)="navigateTo('/home?filter=REJECTED')">Rejected</li>
+      <li (click)="navigateTo('/home?filter=CLOSED')">Closed</li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

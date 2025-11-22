@@ -93,4 +93,9 @@ export class Auth {
     const user = this.currentUserSubject.value
     return user?.role === UserRole.SUPERADMIN
   }
+
+  get currentUserValue(): User | null {
+  return this.currentUserSubject.value;
+}
+
 }
