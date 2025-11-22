@@ -1,0 +1,51 @@
+<div class="details-container">
+  <div *ngIf="loading" class="loading-spinner">
+    <p>Loading post...</p>
+  </div>
+
+  <div *ngIf="!loading && post" class="post-details">
+    <a routerLink="/posts" class="back-link">&larr; Back to Posts</a>
+
+    <div class="post-card">
+      <div class="post-header">
+        <h1>{{ post.title }}</h1>
+        <span class="status-badge" [ngClass]="'status-' + post.status.toLowerCase()">
+          {{ post.status }}
+        </span>
+      </div>
+
+      <p class="post-description">{{ post.description }}</p>
+      <p class="post-meta">Created: {{ formatDate(post.createdAt) }}</p>
+
+      <div class="post-actions">
+        <button
+          (click)="submitPost()"
+          *ngIf="post.status === 'DRAFT'"
+          class="btn btn-primary"
+        >
+          Submit for Approval
+        </button>
+        <button
+          (click)="closePost()"
+          *ngIf="post.status === 'APPROVED'"
+          class="btn btn-danger"
+        >
+          Close Post
+        </button>
+      </div>
+    </div>
+
+    <div class="comments-section">
+      <h2>Comments</h2>
+      <app-comments 
+        [postId]="post.id"
+        (commentAdded)="onCommentAdded($event)"
+      ></app-comments>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !post" class="not-found">
+    <p>Post not found</p>
+    <a routerLink="/posts" class="btn btn-secondary">Back to Posts</a>
+  </div>
+</div>

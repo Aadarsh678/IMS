@@ -1,0 +1,33 @@
+<div class="posts-list-container">
+  <div class="header-section">
+    <h1>Approved Posts</h1>
+    <a href="/posts/create" class="btn btn-primary">+ Create New Post</a>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    <p>Loading posts...</p>
+  </div>
+
+  <div *ngIf="!loading && posts.length > 0" class="posts-grid">
+    <div *ngFor="let post of posts" class="post-card">
+      <div class="post-header">
+        <h2>{{ post.title }}</h2>
+        <span class="status-badge" [ngClass]="'status-' + post.status.toLowerCase()">
+          {{ post.status }}
+        </span>
+      </div>
+      <p class="post-description">{{ post.description }}</p>
+      <div class="post-meta">
+        <small>Created: {{ formatDate(post.createdAt) }}</small>
+      </div>
+      <div class="post-actions">
+        <a [routerLink]="['/posts', post.id]" class="btn btn-secondary">View Details</a>
+        <button (click)="deletePost(post.id)" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && posts.length === 0" class="no-posts">
+    <p>No approved posts yet.</p>
+  </div>
+</div>
