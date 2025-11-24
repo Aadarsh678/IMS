@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core"
 import { HttpClient } from "@angular/common/http"
 import type { Observable } from "rxjs"
-import type { Post, CreatePostRequest, ChangePostStatusRequest } from "../../shared/models"
+import type { Post, CreatePostRequest, ChangePostStatusRequest, PostStatus } from "../../shared/models"
 
 @Injectable({
   providedIn: "root",
@@ -33,7 +33,15 @@ export class PostService {
   }
 
   //to see loged in user all post regardless of status
-  getUserPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.apiUrl}/user`)
+  getUserPosts(status?: PostStatus): Observable<Post[]> {
+  // Only pass postStatus if a specific filter is selected
+    const params: Record<string, string> = status ? { postStatus: status } : {};
+    return this.http.get<Post[]>(`${this.apiUrl}/user`, { params });
   }
+
+  getPostById(id: number) {
+    return this.http.get<Post>(`${this.apiUrl}/${id}`);
+  }
+
+
 }

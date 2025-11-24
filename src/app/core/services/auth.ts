@@ -1,101 +1,94 @@
-import { Injectable } from "@angular/core"
-import { HttpClient } from "@angular/common/http"
-import { BehaviorSubject, type Observable } from "rxjs"
-import { tap } from "rxjs/operators"
-import { type User, type AuthResponse, UserRole } from "../../shared/models"
-
-
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, Observable } from "rxjs";
+import { tap } from "rxjs/operators";
+import { User, AuthResponse, UserRole } from "../../shared/models";
 
 @Injectable({
   providedIn: "root",
 })
 export class Auth {
-  private apiUrl = "https://localhost:7015/api/auth"
-  private currentUserSubject = new BehaviorSubject<User | null>(null)
-  public currentUser$ = this.currentUserSubject.asObservable()
+  private apiUrl = "https://localhost:7015/api/auth";
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    this.loadStoredUser()
+    this.loadStoredUser();
   }
 
+  /** Load user from localStorage on init */
   private loadStoredUser(): void {
-    const stored = localStorage.getItem("currentUser")
+    const stored = localStorage.getItem("currentUser");
     if (stored) {
-      this.currentUserSubject.next(JSON.parse(stored))
+      const user = JSON.parse(stored) as User;
+      this.currentUserSubject.next(user);
     }
   }
 
+  /** Store basic auth credentials */
   private storeCredentials(email: string, password: string): void {
-    const credentials = btoa(`${email}:${password}`)
-    localStorage.setItem("basicAuth", credentials)
-    localStorage.setItem("userEmail", email)
+    const credentials = btoa(`${email}:${password}`);
+    localStorage.setItem("basicAuth", credentials);
+    localStorage.setItem("userEmail", email);
   }
 
+  /** Clear stored credentials */
   private clearCredentials(): void {
-    localStorage.removeItem("basicAuth")
-    localStorage.removeItem("userEmail")
+    localStorage.removeItem("basicAuth");
+    localStorage.removeItem("userEmail");
   }
 
+  /** Register new user */
   register(username: string, email: string, password: string): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.apiUrl}/register`, {
-        username,
-        email,
-        password,
-      })
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, { username, email, password })
       .pipe(
-        tap((response) => {
-          localStorage.setItem("userId", response.id.toString())
-          localStorage.setItem("currentUser", JSON.stringify(response))
-          this.storeCredentials(email, password)
-          this.currentUserSubject.next(response as User)
-        }),
-      )
+        tap(response => this.setUserAfterAuth(response, email, password))
+      );
   }
 
+  /** Login user */
   login(email: string, password: string): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.apiUrl}/login`, {
-        email,
-        password,
-      })
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password })
       .pipe(
-        tap((response) => {
-          localStorage.setItem("userId", response.id.toString())
-          localStorage.setItem("currentUser", JSON.stringify(response))
-          this.storeCredentials(email, password)
-          this.currentUserSubject.next(response as User)
-        }),
-      )
+        tap(response => this.setUserAfterAuth(response, email, password))
+      );
   }
 
+  /** Logout user */
   logout(): void {
-    localStorage.removeItem("userId")
-    localStorage.removeItem("currentUser")
-    this.clearCredentials()
-    this.currentUserSubject.next(null)
+    localStorage.removeItem("userId");
+    localStorage.removeItem("currentUser");
+    this.clearCredentials();
+    this.currentUserSubject.next(null);
   }
 
+  /** Set user after login/register */
+  private setUserAfterAuth(user: AuthResponse, email: string, password: string): void {
+    localStorage.setItem("userId", user.id.toString());
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    this.storeCredentials(email, password);
+    this.currentUserSubject.next(user as User);
+  }
+
+  /** Get current user */
   getCurrentUser(): User | null {
-    return this.currentUserSubject.value
+    return this.currentUserSubject.value;
   }
 
+  /** Check if user is authenticated */
   isAuthenticated(): boolean {
-    return !!this.currentUserSubject.value
+    return !!this.currentUserSubject.value;
   }
 
+  /** Check if user is admin */
   isAdmin(): boolean {
-    const user = this.currentUserSubject.value
-    return user?.role === UserRole.ADMIN || user?.role === UserRole.SUPERADMIN
+    const user = this.currentUserSubject.value;
+    return user?.role === UserRole.ADMIN || user?.role === UserRole.SUPERADMIN;
   }
 
+  /** Check if user is superadmin */
   isSuperAdmin(): boolean {
-    const user = this.currentUserSubject.value
-    return user?.role === UserRole.SUPERADMIN
+    const user = this.currentUserSubject.value;
+    return user?.role === UserRole.SUPERADMIN;
   }
-
-  get currentUserValue(): User | null {
-  return this.currentUserSubject.value;
-}
-
 }

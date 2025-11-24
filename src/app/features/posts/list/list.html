@@ -1,7 +1,7 @@
 <div class="posts-list-container">
   <div class="header-section">
-    <h1>Approved Posts</h1>
-    <a href="/posts/create" class="btn btn-primary">+ Create New Post</a>
+    <h1>{{ filter ? filter : 'Approved Posts' }}</h1>
+    <!-- <a [routerLink]="['/posts/create']" class="btn btn-primary">+ Create New Post</a> -->
   </div>
 
   <div *ngIf="loading" class="loading-spinner">
@@ -28,6 +28,6 @@
   </div>
 
   <div *ngIf="!loading && posts.length === 0" class="no-posts">
-    <p>No approved posts yet.</p>
+    <p>No posts for {{ filter ? filter : 'Approved' }} yet.</p>
   </div>
 </div>

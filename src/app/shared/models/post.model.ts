@@ -2,10 +2,17 @@ import { PostComment } from "./comment.model"
 
 export enum PostStatus {
   DRAFT = "DRAFT",
-  SUBMITTED = "SUBMITTED",
+  PENDING_APPROVAL = "PENDING_APPROVAL",
   APPROVED = "APPROVED",
   REJECTED = "REJECTED",
   CLOSED = "CLOSED",
+}
+
+export enum PostType {
+    ISSUE = "ISSUE",
+    COMPLAINT = "COMPLAINT",
+    POST = "POST",
+    ANNOUNCEMENT = "ANNOUNCEMENT"
 }
 
 export interface Post {
@@ -14,6 +21,7 @@ export interface Post {
   description: string
   createdBy: number
   assignedTo: number | null
+  postType: PostType
   status: PostStatus
   createdAt: string
   creator?: any
@@ -23,6 +31,7 @@ export interface Post {
 }
 
 export interface CreatePostRequest {
+  postType: PostType
   title: string
   description: string
 }

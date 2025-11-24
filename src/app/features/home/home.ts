@@ -1,27 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { PostService } from '../../core/services';
-import { Post, CreatePostRequest, PostStatus } from '../../shared/models';
+import { Post, CreatePostRequest } from '../../shared/models';
 import { Comments } from '../posts/comments/comments';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.html',
-  imports: [ReactiveFormsModule, Comments],
+  imports: [ReactiveFormsModule, Comments, CommonModule],
   styleUrls: ['./home.scss']
 })
 export class HomeComponent implements OnInit {
   posts: Post[] = [];
   postForm: FormGroup;
-  filter: 'all' | PostStatus = 'all';
-  PostStatus = PostStatus;
 
   constructor(
     private postService: PostService,
-    private fb: FormBuilder,
-    private route: ActivatedRoute
+    private fb: FormBuilder
   ) {
     this.postForm = this.fb.group({
       title: ['', Validators.required],
@@ -30,38 +27,33 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.filter = params['filter'] || 'all';
-      this.loadPosts();
-    });
+    this.loadPosts();
   }
 
+  // Load only approved posts of all users
   loadPosts() {
-    if (this.filter === 'all' || this.filter === PostStatus.APPROVED) {
-      this.postService.getAllApprovedPosts().subscribe({
-        next: res => this.posts = res,
-        error: err => console.error(err)
-      });
-    } else {
-      this.postService.getUserPosts().subscribe({
-        next: res => {
-          this.posts = res.filter(p => p.status === this.filter);
-        },
-        error: err => console.error(err)
-      });
-    }
+    this.postService.getAllApprovedPosts().subscribe({
+      next: res => this.posts = res,
+      error: err => console.error('Error loading posts', err)
+    });
   }
 
-  addPost() {
-    if (this.postForm.invalid) return;
+  // addPost() {
+  //   if (this.postForm.invalid) return;
 
-    const req: CreatePostRequest = this.postForm.value;
-    this.postService.createPost(req).subscribe({
-      next: () => {
-        this.postForm.reset();
-        this.loadPosts();
-      },
-      error: err => console.error(err)
-    });
+  //   const req: CreatePostRequest = this.postForm.value;
+  //   this.postService.createPost(req).subscribe({
+  //     next: () => {
+  //       this.postForm.reset();
+  //       this.loadPosts();
+  //     },
+  //     error: err => console.error(err)
+  //   });
+  // }
+
+  // Placeholder for future post type filter
+  filterByType(postType?: string) {
+    console.log('Filter by post type:', postType);
+    // TODO: Implement API call when post type filtering is added
   }
 }

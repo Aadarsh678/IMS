@@ -35,7 +35,7 @@ export class Login {
 
     this.authService.login(this.form.value.email, this.form.value.password).subscribe({
       next: () => {
-        this.router.navigate(["/posts"])
+        this.router.navigate(["/home"])
       },
       error: (err) => {
         this.error = "Invalid email or password"

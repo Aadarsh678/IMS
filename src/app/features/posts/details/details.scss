@@ -23,10 +23,10 @@
   margin-bottom: 1.5rem;
   font-weight: 500;
   display: inline-block;
+}
 
-  &:hover {
-    text-decoration: underline;
-  }
+.back-link:hover {
+  text-decoration: underline;
 }
 
 .post-card {
@@ -35,82 +35,80 @@
   border-radius: 8px;
   padding: 2rem;
   margin-bottom: 2rem;
+}
 
-  .post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 1rem;
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
 
-    h1 {
-      margin: 0;
-      color: #333;
-      flex: 1;
-    }
-  }
+.post-header h1 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+  flex: 1;
+}
 
-  .status-badge {
-    padding: 0.35rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    white-space: nowrap;
+.post-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
 
-    &.status-draft {
-      background-color: #e0e0e0;
-      color: #333;
-    }
+.post-type-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  background-color: #667eea;
+  color: white;
+  white-space: nowrap;
+}
 
-    &.status-submitted {
-      background-color: #fff3cd;
-      color: #856404;
-    }
+.status-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  white-space: nowrap;
+}
 
-    &.status-approved {
-      background-color: #d4edda;
-      color: #155724;
-    }
+/* Status colors */
+.status-draft { background-color: #e0e0e0; color: #333; }
+.status-pending_approval { background-color: #fff3cd; color: #856404; }
+.status-approved { background-color: #d4edda; color: #155724; }
+.status-rejected { background-color: #f8d7da; color: #721c24; }
+.status-closed { background-color: #cce5ff; color: #004085; }
 
-    &.status-rejected {
-      background-color: #f8d7da;
-      color: #721c24;
-    }
+.post-description {
+  color: #666;
+  line-height: 1.6;
+  margin: 1rem 0;
+  font-size: 1rem;
+}
 
-    &.status-closed {
-      background-color: #cce5ff;
-      color: #004085;
-    }
-  }
+.post-meta {
+  color: #999;
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem 0;
+}
 
-  .post-description {
-    color: #666;
-    line-height: 1.6;
-    margin: 1rem 0;
-    font-size: 1rem;
-  }
-
-  .post-meta {
-    color: #999;
-    font-size: 0.9rem;
-    margin: 0 0 1.5rem 0;
-  }
-
-  .post-actions {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
+.post-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .comments-section {
   margin-top: 2rem;
+}
 
-  h2 {
-    margin-top: 0;
-    color: #333;
-    font-size: 1.25rem;
-  }
+.comments-section h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.25rem;
 }
 
 .not-found {
@@ -129,37 +127,37 @@
   transition: all 0.2s;
   text-decoration: none;
   display: inline-block;
+}
 
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .btn-primary {
   background-color: #667eea;
   color: white;
+}
 
-  &:hover:not(:disabled) {
-    background-color: #5568d3;
-  }
+.btn-primary:hover:not(:disabled) {
+  background-color: #5568d3;
 }
 
 .btn-secondary {
   background-color: #f0f0f0;
   color: #333;
   border: 1px solid #ddd;
+}
 
-  &:hover {
-    background-color: #e8e8e8;
-  }
+.btn-secondary:hover {
+  background-color: #e8e8e8;
 }
 
 .btn-danger {
   background-color: #f44336;
   color: white;
+}
 
-  &:hover:not(:disabled) {
-    background-color: #da190b;
-  }
+.btn-danger:hover:not(:disabled) {
+  background-color: #da190b;
 }

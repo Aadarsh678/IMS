@@ -35,21 +35,21 @@ export class Details implements OnInit {
   }
 
   loadPost(): void {
-    this.postService.getUserPosts().subscribe({
-      next: (posts) => {
-        this.post = posts.find((p) => p.id === this.postId) || null
-        if (this.post) {
-          this.loadComments()
-        } else {
-          this.loading = false
-        }
-      },
-      error: (err) => {
-        console.error("Error loading post:", err)
-        this.loading = false
-      },
-    })
-  }
+  this.loading = true;
+  this.postService.getPostById(this.postId).subscribe({
+    next: (post: Post) => {
+      this.post = post;
+      this.loadComments();
+    },
+    error: (err: any) => {   // <-- explicitly type 'err'
+      console.error("Error loading post:", err);
+      this.post = null;
+      this.loading = false;
+    }
+  });
+}
+
+
 
   loadComments(): void {
     if (!this.post) return

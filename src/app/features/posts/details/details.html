@@ -9,15 +9,21 @@
     <div class="post-card">
       <div class="post-header">
         <h1>{{ post.title }}</h1>
-        <span class="status-badge" [ngClass]="'status-' + post.status.toLowerCase()">
-          {{ post.status }}
-        </span>
-      </div>
+        <div class="post-badges">
+            <span class="post-type-badge">{{ post.postType }}</span>
+            <span class="status-badge" [ngClass]="'status-' + post.status.toLowerCase()">
+            {{ post.status }}
+            </span>
+        </div>
+        </div>
 
-      <p class="post-description">{{ post.description }}</p>
-      <p class="post-meta">Created: {{ formatDate(post.createdAt) }}</p>
+        <p class="post-description">{{ post.description }}</p>
+        <p class="post-meta">Created: {{ formatDate(post.createdAt) }}</p>
+
+
 
       <div class="post-actions">
+        <!-- Submit for approval only for draft posts -->
         <button
           (click)="submitPost()"
           *ngIf="post.status === 'DRAFT'"
@@ -25,9 +31,11 @@
         >
           Submit for Approval
         </button>
+
+        <!-- Close post for all posts except already closed -->
         <button
           (click)="closePost()"
-          *ngIf="post.status === 'APPROVED'"
+          *ngIf="post.status !== 'CLOSED'"
           class="btn btn-danger"
         >
           Close Post

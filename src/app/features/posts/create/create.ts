@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common"
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from "@angular/forms"
 import { Router, RouterLink } from "@angular/router"
 import { PostService } from "../../../core/services"
+import { PostType } from "../../../shared"
 
 @Component({
   selector: "app-create-post",
@@ -15,6 +16,7 @@ export class Create {
   form: FormGroup
   loading = false
   error: string | null = null
+  PostType = PostType
 
   constructor(
     private fb: FormBuilder,
@@ -24,6 +26,7 @@ export class Create {
     this.form = this.fb.group({
       title: ["", [Validators.required, Validators.minLength(5)]],
       description: ["", [Validators.required, Validators.minLength(10)]],
+      type: [PostType.ISSUE, Validators.required] // default type
     })
   }
 
@@ -48,9 +51,12 @@ export class Create {
     const field = this.form.get(fieldName)
     if (!field || !field.errors || !field.touched) return null
 
-    if (field.errors["required"]) return `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} is required`
+    if (field.errors["required"])
+      return `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} is required`
     if (field.errors["minlength"])
-      return `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} must be at least ${field.errors["minlength"].requiredLength} characters`
+      return `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} must be at least ${
+        field.errors["minlength"].requiredLength
+      } characters`
 
     return null
   }

@@ -10,14 +10,21 @@
 
 <div class="container">
   <aside class="sidebar">
-    <ul>
-      <li (click)="navigateTo('/home?filter=all')">All Posts</li>
-      <li (click)="navigateTo('/home?filter=DRAFT')">Draft</li>
-      <li (click)="navigateTo('/home?filter=SUBMITTED')">Submitted</li>
-      <li (click)="navigateTo('/home?filter=APPROVED')">Approved</li>
-      <li (click)="navigateTo('/home?filter=REJECTED')">Rejected</li>
-      <li (click)="navigateTo('/home?filter=CLOSED')">Closed</li>
-    </ul>
+    <!-- layout.html sidebar -->
+<nav class="sidebar">
+<ul class="sidebar-filters">
+  <li (click)="navigateTo('/posts')">All</li>
+  <li (click)="navigateTo('/posts', PostStatus.DRAFT)">Draft</li>
+  <li (click)="navigateTo('/posts', PostStatus.PENDING_APPROVAL)">Submitted</li>
+  <li (click)="navigateTo('/posts', PostStatus.APPROVED)">Approved</li>
+  <li (click)="navigateTo('/posts', PostStatus.REJECTED)">Rejected</li>
+  <li (click)="navigateTo('/posts', PostStatus.CLOSED)">Closed</li>
+</ul>
+
+
+</nav>
+
+
   </aside>
 
   <main class="main-content">
