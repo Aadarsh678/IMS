@@ -1,12 +1,11 @@
 <div class="comments-container">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="add-comment-form">
+  <form [formGroup]="addForm" (ngSubmit)="onSubmitAddComment()" class="add-comment-form">
     <div class="form-group">
-      <label for="content">Add a comment</label>
       <textarea
         id="content"
         formControlName="content"
-        placeholder="Share your thoughts..."
-        rows="3"
+        placeholder="Write a comment..."
+        rows="1"
         class="form-input"
       ></textarea>
       <span class="error-text" *ngIf="getFieldError('content')">
@@ -16,22 +15,80 @@
 
     <button
       type="submit"
-      [disabled]="form.invalid || loading"
+      [disabled]="addForm.invalid || loading"
       class="btn btn-primary"
     >
-      {{ loading ? 'Posting...' : 'Post Comment' }}
+      {{ loading ? 'Posting...' : 'Post' }}
     </button>
   </form>
 
+  <!-- Comments List -->
   <div class="comments-list">
     <div *ngIf="comments.length > 0">
-      <div *ngFor="let comment of comments" class="comment-item">
-        <div class="comment-content">{{ comment.content }}</div>
+      <div *ngFor="let comment of visibleComments" class="comment-item">
+        <div class="comment-header">
+          <mat-icon>account_circle</mat-icon>
+          <div class="comment-author">
+            <span>{{ comment.author?.userName || 'Anonymous' }}</span>
+          </div>
+        </div>
+
+        <!-- Display comment content or show edit form if in edit mode -->
+        <div *ngIf="!isEditMode || editingComment?.id !== comment.id" class="comment-content">
+          {{ comment.content }}
+        </div>
+
+        <!-- Edit Comment Form -->
+        <div *ngIf="isEditMode && editingComment?.id === comment.id">
+          <form [formGroup]="editForm" (ngSubmit)="onSubmitEditComment()">
+            <textarea
+              formControlName="content"
+              placeholder="Edit your comment..."
+              rows="1"
+              class="form-input"
+            ></textarea>
+            <span class="error-text" *ngIf="getFieldError('content')">
+              {{ getFieldError('content') }}
+            </span>
+
+            <button
+              type="submit"
+              [disabled]="editForm.invalid || loading"
+              class="btn btn-primary"
+            >
+              {{ loading ? 'Updating...' : 'Update' }}
+            </button>
+
+            <button
+              type="button"
+              (click)="cancelEdit()"
+              class="btn btn-secondary"
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+
+        <!-- Comment Footer -->
         <div class="comment-meta">
-          Posted: {{ formatDate(comment.createdAt) }}
-          <button (click)="deleteComment(comment.id)" class="btn-delete">Delete</button>
+          <span class="comment-time">{{ formatDate(comment.createdAt) }}</span>
+          
+          <!-- Edit and Delete Buttons Side by Side -->
+          <div class="comment-actions">
+            <button *ngIf="!isEditMode" (click)="editComment(comment)" class="btn-edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button (click)="deleteComment(comment.id)" class="btn-delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
+
+      <!-- See More/Less Comments Button -->
+      <button *ngIf="comments.length > 2" (click)="toggleComments()" class="see-more-btn">
+        {{ showAllComments ? 'See less comments' : 'See more comments' }}
+      </button>
     </div>
 
     <p *ngIf="comments.length === 0" class="no-comments">

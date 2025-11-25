@@ -27,7 +27,7 @@ export interface Post {
   creator?: any
   assignee?: any
   comments?: PostComment[]
-  updates?: PostUpdate[]
+  updates?: PostUpdateRequest[]
 }
 
 export interface CreatePostRequest {
@@ -40,9 +40,8 @@ export interface ChangePostStatusRequest {
   id: number
 }
 
-export interface PostUpdate {
-  id: number
-  postId: number
-  content: string
-  createdAt: string
+export interface PostUpdateRequest {
+  title: string
+  description: string
+  postType: PostType
 }

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PostService } from '../../core/services';
 import { Post, CreatePostRequest } from '../../shared/models';
+import { BrowserModule } from '@angular/platform-browser';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Comments } from '../posts/comments/comments';
 import { CommonModule } from '@angular/common';
 
@@ -9,7 +12,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.html',
-  imports: [ReactiveFormsModule, Comments, CommonModule],
+  imports: [ReactiveFormsModule, Comments, CommonModule,MatIconModule],
   styleUrls: ['./home.scss']
 })
 export class HomeComponent implements OnInit {

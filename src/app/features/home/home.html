@@ -9,8 +9,11 @@
 <div class="feed-container">
   <div class="feed">
     <div class="post-card" *ngFor="let post of posts">
-    <div class="post-type-badge">{{ post.postType }}</div>
-    <div class="meta">{{ post.creator }}</div>
+      <div class="post-type-badge">{{ post.postType }}</div>
+      <div class="post-header">
+        <mat-icon>account_circle</mat-icon>
+        <div class="meta">{{ post.creator }}</div>
+      </div>
       <h3>{{ post.title }}</h3>
       <p>{{ post.description }}</p>
       <app-comments [postId]="post.id"></app-comments>

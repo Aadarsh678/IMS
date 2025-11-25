@@ -1,59 +1,94 @@
 <div class="details-container">
+  <!-- Loading Spinner -->
   <div *ngIf="loading" class="loading-spinner">
     <p>Loading post...</p>
   </div>
 
+  <!-- Post Details Section -->
   <div *ngIf="!loading && post" class="post-details">
     <a routerLink="/posts" class="back-link">&larr; Back to Posts</a>
 
+    <!-- Post Card -->
     <div class="post-card">
       <div class="post-header">
         <h1>{{ post.title }}</h1>
         <div class="post-badges">
-            <span class="post-type-badge">{{ post.postType }}</span>
-            <span class="status-badge" [ngClass]="'status-' + post.status.toLowerCase()">
+          <!-- Post Type Badge -->
+          <span class="post-type-badge">{{ post.postType }}</span>
+          <!-- Status Badge -->
+          <span class="status-badge" [ngClass]="'status-' + post.status.toLowerCase()">
             {{ post.status }}
-            </span>
+          </span>
         </div>
-        </div>
+      </div>
 
-        <p class="post-description">{{ post.description }}</p>
-        <p class="post-meta">Created: {{ formatDate(post.createdAt) }}</p>
+      <!-- Post Description -->
+      <p class="post-description">{{ post.description }}</p>
 
+      <!-- Post Metadata -->
+      <p class="post-meta">Created: {{ formatDate(post.createdAt) }}</p>
 
-
+      <!-- Post Actions -->
       <div class="post-actions">
-        <!-- Submit for approval only for draft posts -->
-        <button
-          (click)="submitPost()"
-          *ngIf="post.status === 'DRAFT'"
-          class="btn btn-primary"
-        >
+        <!-- Update Post Button -->
+        <button (click)="openUpdatePopup()" class="btn btn-primary">Update Post</button>
+
+        <!-- Submit for Approval Button (Visible only when the post status is 'DRAFT') -->
+        <button (click)="submitPost()" *ngIf="post.status === 'DRAFT'" class="btn btn-primary">
           Submit for Approval
         </button>
 
-        <!-- Close post for all posts except already closed -->
-        <button
-          (click)="closePost()"
-          *ngIf="post.status !== 'CLOSED'"
-          class="btn btn-danger"
-        >
+        <!-- Close Post Button (Visible only when the post status is not 'CLOSED') -->
+        <button (click)="closePost()" *ngIf="post.status === 'APPROVED'" class="btn btn-danger">
           Close Post
+        </button>
+
+        <!-- Delete Post Button (Visible only if the user has permission to delete the post) -->
+        <button (click)="deletePost(post.id)" *ngIf="canDeletePost(post)" class="btn btn-danger">
+          Delete Post
         </button>
       </div>
     </div>
+  </div>
 
-    <div class="comments-section">
-      <h2>Comments</h2>
-      <app-comments 
-        [postId]="post.id"
-        (commentAdded)="onCommentAdded($event)"
-      ></app-comments>
+  <!-- Popup for updating Post -->
+  <div class="update-popup" *ngIf="isUpdatePopupVisible">
+    <div class="popup-content">
+      <h2>Update Post</h2>
+
+      <!-- Title Field -->
+      <label for="updatedTitle">Title:</label>
+      <input id="updatedTitle" [(ngModel)]="updatedTitle" type="text" placeholder="Enter new title" />
+
+      <!-- Description Field -->
+      <label for="updatedDescription">Description:</label>
+      <textarea id="updatedDescription" [(ngModel)]="updatedDescription" placeholder="Enter new description"></textarea>
+
+      <!-- Post Type Dropdown -->
+      <label for="updatedPostType">Post Type:</label>
+      <select id="updatedPostType" [(ngModel)]="updatedPostType">
+        <option *ngFor="let type of postTypes" [ngValue]="type">{{ type }}</option>
+      </select>
+
+      <!-- Popup Actions -->
+      <div class="popup-actions">
+        <button (click)="updatePost()" class="btn btn-success">OK</button>
+        <button (click)="closeUpdatePopup()" class="btn btn-secondary">Cancel</button>
+      </div>
     </div>
   </div>
 
-  <div *ngIf="!loading && !post" class="not-found">
-    <p>Post not found</p>
-    <a routerLink="/posts" class="btn btn-secondary">Back to Posts</a>
+  <!-- Comments Section -->
+  <!-- <div class="comments-section" *ngIf="post?.id">
+    <h2>Comments</h2>
+    <app-comments [postId]="post?.id ?? 0" (commentAdded)="onCommentAdded($event)"></app-comments>
+  </div> -->
+   <div class="comments-section" *ngIf="post?.id">
+    <h2>Comments</h2>
+    <app-comments 
+      [postId]="post?.id ?? 0" 
+      (commentAdded)="onCommentAdded($event)"
+      (commentUpdated)="onCommentUpdated($event)">
+    </app-comments>
   </div>
 </div>

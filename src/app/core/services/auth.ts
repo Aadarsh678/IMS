@@ -8,7 +8,7 @@ import { User, AuthResponse, UserRole } from "../../shared/models";
   providedIn: "root",
 })
 export class Auth {
-  private apiUrl = "https://localhost:7015/api/auth";
+  private apiUrl = "https://localhost:7251/api/auth";
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
@@ -73,6 +73,10 @@ export class Auth {
   /** Get current user */
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
+  }
+
+  getCurrentUserId(): number | null {
+    return this.currentUserSubject.value?.id || null;
   }
 
   /** Check if user is authenticated */

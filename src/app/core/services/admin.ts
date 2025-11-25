@@ -7,7 +7,7 @@ import { Post, User, ChangePostStatusRequest } from "../../shared/models"
   providedIn: "root",
 })
 export class AdminService {
-  private apiUrl = "https://localhost:5000/api/admin"
+  private apiUrl = "https://localhost:7251/api/admin"
 
   constructor(private http: HttpClient) {}
 

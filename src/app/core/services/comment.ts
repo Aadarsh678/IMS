@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core"
 import { HttpClient } from "@angular/common/http"
 import { Observable } from "rxjs"
-import { PostComment, CreateCommentRequest } from "../../shared/models"
+import { PostComment, CreateCommentRequest, UpdateCommentRequest } from "../../shared/models"
 
 @Injectable({
   providedIn: "root",
 })
 export class CommentService {
-  private apiUrl = "https://localhost:7015/api/comment"
+  private apiUrl = "https://localhost:7251/api/comment"
 
   constructor(private http: HttpClient) {}
 
@@ -21,5 +21,9 @@ export class CommentService {
 
   deleteComment(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`)
+  }
+
+  updateComment(id: number, request: UpdateCommentRequest): Observable<PostComment> {
+    return this.http.put<PostComment>(`${this.apiUrl}/${id}`, request)
   }
 }
