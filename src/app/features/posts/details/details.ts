@@ -164,7 +164,6 @@
 //     }
 //   }
 // }
-
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -175,6 +174,7 @@ import { PostComment } from "../../../shared";
 import { Comments } from "../comments/comments";
 import { FormsModule } from "@angular/forms";
 import { MatIcon } from "@angular/material/icon";
+import { ChangeDetectorRef } from '@angular/core'; // Import ChangeDetectorRef
 
 @Component({
   selector: "app-post-details",
@@ -199,7 +199,8 @@ export class Details implements OnInit {
     private router: Router,
     private postService: PostService,
     private commentService: CommentService,
-    private authService: Auth
+    private authService: Auth,
+    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef to force change detection
   ) {}
 
   ngOnInit(): void {
@@ -258,7 +259,13 @@ export class Details implements OnInit {
   if (this.post?.comments) {
     const index = this.post.comments.findIndex(c => c.id === updatedComment.id);
     if (index > -1) {
-      this.post.comments[index] = updatedComment;  // Update the comment in the parent's array
+      // Replace the comment in the parent's array
+      this.post.comments = [
+        ...this.post.comments.slice(0, index),
+        updatedComment,  // Update the comment with the new one
+        ...this.post.comments.slice(index + 1)
+      ];
+      this.cdr.detectChanges();  // Ensure the change is reflected in the UI
     }
   }
 }

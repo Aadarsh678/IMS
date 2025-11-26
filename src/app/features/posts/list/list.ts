@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common"
 import { RouterLink, ActivatedRoute } from "@angular/router"
 import { PostService } from "../../../core/services"
 import { Post, PostStatus } from "../../../shared"
+import { Auth } from "../../../core/services"
 
 @Component({
   selector: "app-posts-list",
@@ -17,7 +18,7 @@ export class List implements OnInit {
   filter?: PostStatus
   PostStatus = PostStatus
 
-  constructor(private postService: PostService, private route: ActivatedRoute) {}
+  constructor(private postService: PostService, private route: ActivatedRoute,private authService: Auth,) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -78,5 +79,9 @@ export class List implements OnInit {
 
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString()
+  }
+    
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
   }
 }

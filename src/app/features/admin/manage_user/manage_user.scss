@@ -1,0 +1,131 @@
+/* Overall container */
+.user-table-container {
+  padding: 20px;
+  background-color: #f9f9f9; /* Light gray background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+/* Table styling */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.user-table th, .user-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd; /* Light border for separation */
+}
+
+.user-table th {
+  background-color: #2c3e50; /* Dark blue for header */
+  color: white;
+  font-size: 16px;
+}
+
+.user-table td {
+  font-size: 14px;
+  color: #333; /* Dark text color */
+}
+
+/* Action buttons */
+.btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+/* Success button (e.g. Promote) */
+.btn-success {
+  background-color: #28a745; /* Green for success */
+  color: white;
+  
+  &:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+}
+
+/* Warning button (e.g. Demote) */
+.btn-warning {
+  background-color: #f39c12; /* Yellow for warning */
+  color: white;
+  
+  &:hover {
+    background-color: #e67e22; /* Darker yellow on hover */
+  }
+}
+
+/* Danger button (e.g. Delete) */
+.btn-danger {
+  background-color: #dc3545; /* Red for danger */
+  color: white;
+  
+  &:hover {
+    background-color: #c82333; /* Darker red on hover */
+  }
+}
+
+/* Loading spinner and no users message */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 18px;
+  color: #6c757d; /* Gray text for loading state */
+}
+
+.no-users {
+  text-align: center;
+  font-size: 18px;
+  color: #6c757d; /* Gray text for no users message */
+  margin-top: 40px;
+}
+
+/* Responsive Table Styling */
+@media screen and (max-width: 768px) {
+  .user-table {
+    font-size: 12px;
+  }
+
+  .user-table th, .user-table td {
+    padding: 8px;
+  }
+
+  .btn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+/* Table row hover effect */
+.user-table tr:hover {
+  background-color: #f1f1f1; /* Light gray for row hover */
+  cursor: pointer;
+}
+
+/* User Role Styling */
+.role-badge {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: capitalize;
+}
+
+/* Admin role badge */
+.role-badge.admin {
+  background-color: #007bff; /* Blue for admin role */
+  color: white;
+}
+
+/* User role badge */
+.role-badge.user {
+  background-color: #6c757d; /* Gray for user role */
+  color: white;
+}

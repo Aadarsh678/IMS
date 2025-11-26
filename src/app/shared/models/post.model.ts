@@ -45,3 +45,12 @@ export interface PostUpdateRequest {
   description: string
   postType: PostType
 }
+
+
+export interface PostStatistics {
+  totalActiveUsers: number;
+  totalApprovedPosts: number;
+  totalRejectedPosts: number;
+  totalPendingPosts: number;
+  totalClosedPosts: number;
+}

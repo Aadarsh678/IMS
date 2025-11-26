@@ -1,0 +1,30 @@
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <div class="logo">Issue Management</div>
+  <ul class="nav-items">
+    <li (click)="logout()" class="logout">
+      <mat-icon>logout</mat-icon> Logout
+    </li>
+  </ul>
+</nav>
+
+<!-- Sidebar and Main Content -->
+<div class="container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <ul class="sidebar-filters">
+        <li *ngIf="isAdmin()" (click)="navigateTo('/admin/dashboard')">Dashboard</li>
+        <li (click)="navigateTo('/admin/home')">Home</li>
+        <li (click)="navigateTo('/admin/posts')">My Post</li>
+        <li (click)="navigateTo('/admin/posts/create')">Create Post</li>
+        <li *ngIf="isSuperAdmin()" (click)="navigateTo('/admin/manageUser')">Manage User</li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

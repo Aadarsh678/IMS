@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core"
 import { HttpClient } from "@angular/common/http"
 import { Observable } from "rxjs"
-import { Post, User, ChangePostStatusRequest } from "../../shared/models"
+import { Post, User, ChangePostStatusRequest, PostStatistics } from "../../shared/models"
 
 @Injectable({
   providedIn: "root",
@@ -13,6 +13,10 @@ export class AdminService {
 
   promoteUser(userId: number): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/user/promote`, { id: userId })
+  }
+
+  demoteUser(userId: number): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/user/demote`, { id: userId })
   }
 
   approvePost(request: ChangePostStatusRequest): Observable<Post> {
@@ -27,7 +31,15 @@ export class AdminService {
     return this.http.get<Post[]>(`${this.apiUrl}/post/submitted/all`)
   }
 
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/users/all`)
+  }
+
   getSubmittedPostsByUser(userId: number): Observable<Post[]> {
     return this.http.get<Post[]>(`${this.apiUrl}/post/submitted/user/${userId}`)
+  }
+
+  getDashboardStats(): Observable<PostStatistics>{
+    return this.http.get<PostStatistics>(`${this.apiUrl}/ims/dashboard`)
   }
 }

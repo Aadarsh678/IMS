@@ -1,0 +1,129 @@
+.pending-approval-heading-container {
+  text-align: left;
+  margin-bottom: 2rem; /* Space between the heading and the posts section */
+}
+
+/* Heading style */
+.pending-approval-heading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333; /* Darker text for prominence */
+}
+
+.feed-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background: #f7f9fa;
+  min-height: 100vh;
+}
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 900px;
+}
+
+.post-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  margin-bottom: 1.5rem;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+  }
+
+  h3 h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+    color: #333;
+  }
+
+  .meta {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 10px;
+  }
+
+  .post-type-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #3b5998;
+    color: white;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  .approve-btn, .reject-btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+  }
+
+  .approve-btn {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .approve-btn:hover {
+    background-color: #45a049;
+  }
+
+  .reject-btn {
+    background-color: #f44336;
+    color: white;
+  }
+
+  .reject-btn:hover {
+    background-color: #e53935;
+  }
+
+  .approve-btn:disabled, .reject-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+/* Style for the "No posts" message */
+.no-posts-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;  /* Center the message vertically */
+  text-align: center;  /* Center text horizontally */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #555;  /* Light gray color */
+  background-color: #f7f9fa;  /* Soft background color to match the theme */
+  padding: 1rem;
+  border-radius: 8px;  /* Optional: adds rounded corners */
+}

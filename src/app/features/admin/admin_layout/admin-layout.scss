@@ -1,0 +1,109 @@
+/* Navbar */
+.navbar {
+  height: 60px;
+  background: #2c3e50; /* Dark blue for the navbar */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for navbar separation */
+
+  .logo {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .nav-items {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+
+    li {
+      cursor: pointer;
+      font-size: 1rem; /* Slightly larger text */
+      font-weight: bold;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center; /* Centering the logout icon with text */
+      
+      mat-icon {
+        margin-right: 8px; /* Space between icon and text */
+      }
+
+      &:hover {
+        color: #3498db; /* Highlight color when hovered */
+      }
+    }
+  }
+}
+
+/* Container Layout (Sidebar and Main Content) */
+.container {
+  display: flex;
+  height: calc(100vh - 60px); /* Full height minus navbar height */
+
+  /* Sidebar */
+  .sidebar {
+    width: 220px;
+    background: #ecf0f1; /* Light gray background for the sidebar */
+    padding: 15px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow for the sidebar */
+    
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        padding: 12px;
+        cursor: pointer;
+        font-size: 1.1rem; /* Slightly larger font size */
+        font-weight: 500;
+        border-radius: 4px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+
+        &:hover {
+          background: #bdc3c7; /* Light gray hover effect */
+          color: #2c3e50; /* Darken the text color on hover */
+        }
+      }
+    }
+  }
+
+  /* Main Content Area */
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background for main content */
+    overflow-y: auto; /* Ensure scrollable content if needed */
+    border-radius: 8px; /* Rounded corners for a softer look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  }
+}
+
+/* Optional: Additional Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    .nav-items {
+      gap: 10px;
+    }
+  }
+
+  .container {
+    flex-direction: column; /* Stacks sidebar and content vertically on smaller screens */
+    
+    .sidebar {
+      width: 100%;
+      box-shadow: none;
+    }
+
+    .main-content {
+      padding: 10px;
+    }
+  }
+}

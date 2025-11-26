@@ -3,11 +3,12 @@ import { RouterModule, Router } from '@angular/router';
 import { Auth } from '../../core/services';
 import { CommonModule } from '@angular/common';
 import { PostStatus } from '../../shared';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterModule,CommonModule],
+  imports: [RouterModule,CommonModule,MatIcon],
   templateUrl: './layout.html',
   styleUrls: ['./layout.scss']
 })

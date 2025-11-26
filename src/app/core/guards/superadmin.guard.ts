@@ -10,6 +10,6 @@ export const superAdminGuard: CanActivateFn = (route, state) => {
     return true
   }
 
-  router.navigate(["/"])
-  return false
+  router.navigate(['/auth/login']);
+  return false;
 }

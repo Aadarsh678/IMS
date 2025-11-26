@@ -1,0 +1,33 @@
+<div *ngIf="loading">Loading dashboard...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="!loading">
+  <h2>Admin Dashboard</h2>
+  <div class="stats-container">
+    <!-- Card 1: Posts Waiting Approval -->
+    <div class="stat-card" (click)="navigateTo('/admin/approve')">
+      <h3>Posts Waiting Approval</h3>
+      <p>{{ statistics.totalPendingPosts }}</p>
+    </div>
+    <!-- Card 2: Approved Posts -->
+    <div class="stat-card">
+      <h3>Approved Posts</h3>
+      <p>{{ statistics.totalApprovedPosts }}</p>
+    </div>
+    <!-- Card 3: Rejected Posts -->
+    <div class="stat-card">
+      <h3>Rejected Posts</h3>
+      <p>{{ statistics.totalRejectedPosts }}</p>
+    </div>
+    <!-- Card 4: Closed Posts -->
+    <div class="stat-card">
+      <h3>Closed Posts</h3>
+      <p>{{ statistics.totalClosedPosts }}</p>
+    </div>
+    <!-- Card 5: Total Active Users -->
+    <div class="stat-card">
+      <h3>Total Users</h3>
+      <p>{{ statistics.totalActiveUsers }}</p>
+    </div>
+  </div>
+</div>

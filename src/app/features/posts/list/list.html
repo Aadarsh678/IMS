@@ -21,7 +21,8 @@
         <small>Created: {{ formatDate(post.createdAt) }}</small>
       </div>
       <div class="post-actions">
-        <a [routerLink]="['/posts', post.id]" class="btn btn-secondary">View Details</a>
+        <!-- <a [routerLink]="['/posts', post.id]" class="btn btn-secondary">View Details</a> -->
+         <a [routerLink]="isAdmin() ? ['/admin/posts', post.id] : ['/posts', post.id]" class="btn btn-secondary">View Details</a>
         <button (click)="deletePost(post.id)" class="btn btn-danger">Delete</button>
       </div>
     </div>

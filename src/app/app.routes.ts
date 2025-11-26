@@ -1,19 +1,19 @@
-// import { RouterModule, type Routes } from "@angular/router";
-// import { authGuard, adminGuard } from "./core/guards";
+// import { Routes } from "@angular/router";
+// import { authGuard, adminGuard } from "./core/guards";  // Import your guards
 // import { Login } from "./features/auth/login/login";
 // import { Register } from "./features/auth/register/register";
+// import { Layout } from "./features/layout/layout"; // Regular user layout
+// import { HomeComponent } from "./features/home/home"; // The Home component to be used in both layouts
 // import { List } from "./features/posts/list/list";
-// import { Details } from "./features/posts/details/details";
 // import { Create } from "./features/posts/create/create";
-// import { HomeComponent } from "./features/home/home";
-// import { NgModule } from "@angular/core";
+// import { Details } from "./features/posts/details/details";
+// import { AdminLayoutComponent } from "./features/admin/admin_layout/admin-layout"; // Admin layout
+// import { AdminDashboardComponent } from "./features/admin/dashboard/dashboard"; // Admin Dashboard
+// import { Approve } from "./features/admin/approve/approve"; // Admin Approve Posts component
 
 // export const routes: Routes = [
-//   // Default landing: redirect to home
-//   { path: '', redirectTo: '/home', pathMatch: 'full' },
-
-//   // Home / feed (protected)
-//   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+//   // Default route (redirect to home)
+//   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
 //   // Authentication routes
 //   {
@@ -24,51 +24,61 @@
 //     ],
 //   },
 
-//   // Posts routes (protected)
+//   // Main app layout (User routes)
 //   {
-//     path: 'posts',
-//     canActivate: [authGuard],
+//     path: '',
+//     component: Layout,
+//     canActivate: [authGuard],  // Ensure user is authenticated
 //     children: [
-//       { path: '', component: List },           // /posts
-//       { path: 'create', component: Create },   // /posts/create
-//       { path: ':id', component: Details },     // /posts/:id
+//       { path: 'home', component: HomeComponent }, // User home route
+//       { path: 'posts', children: [
+//         { path: '', component: List },        // List all posts
+//         { path: 'create', component: Create }, // Create new post
+//         { path: ':id', component: Details },  // View post details by id
+//       ]},
+//     ]
+//   },
+
+//   // Admin routes (protected by adminGuard)
+//   {
+//     path: 'admin',
+//     component: AdminLayoutComponent, // Admin layout for all admin routes
+//     canActivate: [adminGuard], // Only admins can access
+//     children: [
+//       { path: 'home', component: HomeComponent },  // Use the same HomeComponent in admin layout
+//       { path: 'dashboard', component: AdminDashboardComponent }, // Admin Dashboard
+//       { path: 'approve', component: Approve },
+//       { path: 'details/:id', component: Details },
+//       { path: 'posts', children: [
+//         { path: '', component: List },        // List all posts
+//         { path: 'create', component: Create }, // Create new post
+//         { path: ':id', component: Details },  // View post details by id
+//       ]}
 //     ],
 //   },
 
-//   // Example for future admin routes (protected by adminGuard)
-//   // {
-//   //   path: 'admin',
-//   //   canActivate: [adminGuard],
-//   //   children: [
-//   //     { path: 'approve', component: ApprovePosts },
-//   //     { path: 'promote', component: PromoteUser },
-//   //   ],
-//   // },
-
 //   // Catch-all: redirect unknown routes to login
-//   { path: '**', redirectTo: '/auth/login' },
+//   { path: '**', redirectTo: 'auth/login' }
 // ];
-// @NgModule({
-//   imports: [RouterModule.forRoot(routes)],
-//   exports: [RouterModule],
-// })
-// export class AppRoutingModule {}
-/////////////////////////////////////////////////////////////////
-import { Routes } from "@angular/router";
-import { authGuard } from "./core/guards";
-import { Login } from "./features/auth/login/login";
-import { Register } from "./features/auth/register/register";
-import { Layout } from "./features/layout/layout";
-import { HomeComponent } from "./features/home/home";
-import { List } from "./features/posts/list/list";
-import { Create } from "./features/posts/create/create";
-import { Details } from "./features/posts/details/details";
+import { Routes } from '@angular/router';
+import { authGuard, adminGuard } from './core/guards';  // Import your guards
+import { Login } from './features/auth/login/login';
+import { Register } from './features/auth/register/register';
+import { Layout } from './features/layout/layout';  // Regular user layout
+import { HomeComponent } from './features/home/home';  // The Home component to be used in both layouts
+import { List } from './features/posts/list/list';
+import { Create } from './features/posts/create/create';
+import { Details } from './features/posts/details/details';
+import { AdminLayoutComponent } from './features/admin/admin_layout/admin-layout';  // Admin layout
+import { AdminDashboardComponent } from './features/admin/dashboard/dashboard';  // Admin Dashboard
+import { Approve } from './features/admin/approve/approve'; 
+import { ManageUsersComponent } from './features/admin/manage_user/manage_user';
 
 export const routes: Routes = [
-  // Default: redirect to home
+  // Default route (redirect to home)
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
-  // Authentication
+  // Authentication routes
   {
     path: 'auth',
     children: [
@@ -77,20 +87,39 @@ export const routes: Routes = [
     ],
   },
 
-  // Main app inside layout
+  // Main app layout (User routes)
   {
     path: '',
-    component: Layout,
-    canActivate: [authGuard],
+    component: Layout,  // Regular user layout
+    canActivate: [authGuard],  // Ensure user is authenticated
     children: [
-      { path: 'home', component: HomeComponent },
+      { path: 'home', component: HomeComponent },  // User home route
       { path: 'posts', children: [
-        { path: '', component: List },
-        { path: 'create', component: Create },
-        { path: ':id', component: Details },
+        { path: '', component: List },        // List all posts for user
+        { path: 'create', component: Create }, // Create new post for user
+        { path: ':id', component: Details },  // View post details by id for user
       ]},
     ]
   },
 
+  // Admin routes (protected by adminGuard)
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,  // Admin layout for all admin routes
+    canActivate: [adminGuard], // Only admins can access
+    children: [
+      { path: 'home', component: HomeComponent },  // Admin home route
+      { path: 'dashboard', component: AdminDashboardComponent },  // Admin Dashboard
+      { path: 'approve', component: Approve },  // Admin approve posts route
+      {path:'manageUser', component: ManageUsersComponent},
+      { path: 'posts', children: [
+        { path: '', component: List },        // List all posts for admin
+        { path: 'create', component: Create }, // Create new post for admin
+        { path: ':id', component: Details },  // View post details by id for admin
+      ]},
+    ],
+  },
+
+  // Catch-all: redirect unknown routes to login
   { path: '**', redirectTo: 'auth/login' }
 ];

@@ -1,0 +1,44 @@
+/* Wrapper for the cards */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* Create 3 equal columns */
+  gap: 2rem;  /* Space between the cards */
+  margin-top: 2rem;
+  width: 100%;
+}
+
+/* Each stat card */
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;  /* Ensure the height remains consistent */
+}
+
+/* Hover effect for the stat card */
+.stat-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card h3 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.stat-card p {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+
+

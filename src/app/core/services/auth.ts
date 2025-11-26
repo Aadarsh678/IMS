@@ -90,6 +90,7 @@ export class Auth {
     return user?.role === UserRole.ADMIN || user?.role === UserRole.SUPERADMIN;
   }
 
+
   /** Check if user is superadmin */
   isSuperAdmin(): boolean {
     const user = this.currentUserSubject.value;

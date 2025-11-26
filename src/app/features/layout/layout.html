@@ -1,30 +1,27 @@
 <nav class="navbar">
   <div class="logo">Issue Management</div>
   <ul class="nav-items">
-    <li (click)="navigateTo('/home')">Home</li>
-    <li (click)="navigateTo('/posts/create')">+ Create Post</li>
-    <li *ngIf="isAdmin()" (click)="navigateTo('/admin/approve')">Approve Posts</li>
-    <li (click)="logout()">Logout</li>
+    <li (click)="navigateTo('/home')" class="nav-link">Home</li>
+    <li (click)="navigateTo('/posts/create')" class="nav-link">Create Post</li>
+    <li *ngIf="isAdmin()" (click)="navigateTo('/admin/approve')" class="nav-link">Approve Posts</li>
+    <li (click)="logout()" class="nav-link logout">
+      <mat-icon>logout</mat-icon> Logout
+    </li>
   </ul>
 </nav>
 
 <div class="container">
   <aside class="sidebar">
-    <!-- layout.html sidebar -->
-<nav class="sidebar">
-<ul class="sidebar-filters">
-  <li (click)="navigateTo('/posts')">All</li>
-  <li (click)="navigateTo('/posts', PostStatus.DRAFT)">Draft</li>
-  <li (click)="navigateTo('/posts', PostStatus.PENDING_APPROVAL)">Submitted</li>
-  <li (click)="navigateTo('/posts', PostStatus.APPROVED)">Approved</li>
-  <li (click)="navigateTo('/posts', PostStatus.REJECTED)">Rejected</li>
-  <li (click)="navigateTo('/posts', PostStatus.CLOSED)">Closed</li>
-</ul>
-
-
-</nav>
-
-
+    <nav class="sidebar-nav">
+      <ul class="sidebar-filters">
+        <li (click)="navigateTo('/posts')">All</li>
+        <li (click)="navigateTo('/posts', PostStatus.DRAFT)">Draft</li>
+        <li (click)="navigateTo('/posts', PostStatus.PENDING_APPROVAL)">Submitted</li>
+        <li (click)="navigateTo('/posts', PostStatus.APPROVED)">Approved</li>
+        <li (click)="navigateTo('/posts', PostStatus.REJECTED)">Rejected</li>
+        <li (click)="navigateTo('/posts', PostStatus.CLOSED)">Closed</li>
+      </ul>
+    </nav>
   </aside>
 
   <main class="main-content">

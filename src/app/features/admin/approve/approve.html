@@ -1,0 +1,34 @@
+<div *ngIf="loading">
+  <p>Loading submitted posts...</p>
+</div>
+
+<div *ngIf="error" class="error">
+  <p>{{ error }}</p>
+</div>
+
+<div class="pending-approval-heading-container">
+  <h2 class="pending-approval-heading">Pending Approval</h2>
+</div>
+<div *ngIf="!loading && posts.length">
+  <div class="feed-container">
+    <div class="feed">
+      <div *ngFor="let post of posts" class="post-card">
+        <div class="post-type-badge">{{ post.status | uppercase }}</div>
+        <h3>{{ post.title }}</h3>
+        <h2>{{ post.description }}</h2>
+        <p>{{ post.creator }}</p>
+        <div class="meta">
+          <span>{{ post.createdAt | date:'short' }}</span>
+        </div>
+        <div class="actions">
+          <button (click)="approvePost(post.id)" [disabled]="loading" class="approve-btn">Approve</button>
+          <button (click)="rejectPost(post.id)" [disabled]="loading" class="reject-btn">Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading && !posts.length">
+  <p class="no-posts-message">No submitted posts available for approval.</p>
+</div>

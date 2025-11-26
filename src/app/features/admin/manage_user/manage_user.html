@@ -1,0 +1,49 @@
+<div *ngIf="loading">Loading users...</div>
+
+<div *ngIf="!loading && users.length > 0">
+  <h2>Manage Users</h2>
+
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.userName }}</td>
+        <td>
+          <span [ngClass]="{
+              'role-badge': true, 
+              'admin': user.role === UserRole.ADMIN, 
+              'user': user.role === UserRole.USER,
+              'superadmin': user.role === UserRole.SUPERADMIN
+            }">
+            {{ user.role | titlecase }}
+          </span>
+        </td>
+        <td>
+          <!-- Only SuperAdmin can promote or demote -->
+          <button *ngIf="isSuperAdmin() && user.role !== UserRole.ADMIN" 
+                  (click)="promoteUser(user.id)" 
+                  class="btn btn-success">
+            Promote
+          </button>
+          <button *ngIf="isSuperAdmin() && user.role === UserRole.ADMIN" 
+                  (click)="demoteUser(user.id)" 
+                  class="btn btn-warning">
+            Demote
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!loading && users.length === 0">
+  <p>No users to manage.</p>
+</div>
